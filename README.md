@@ -1,2 +1,2 @@
 # GamemakerCodePulo
-codigo de escalada de parede Gamemaker
+codigos para o Gamemaker
