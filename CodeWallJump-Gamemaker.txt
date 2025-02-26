@@ -1,0 +1,53 @@
+//WALLJUMP GAMEMAKER2
+
+velh = 0
+velv = 0
+max_velh = 6
+max_velv = 8
+grav = 0.3
+chao = false
+parede_esq = false
+parede_dir = false
+_timer = 6
+_tempo = 0
+function anon@223@gml_Object_obj_player_Create_0() //gml_Script_anon@223@gml_Object_obj_player_Create_0
+{
+    var _right = keyboard_check(ord("D"))
+    var _left = keyboard_check(ord("A"))
+    var _jump = keyboard_check_pressed(ord("W"))
+    var _velh = (_right - _left) * max_velh
+    if chao
+        velh = _velh
+    else
+        velh = lerp(velh, _velh, 0.1)
+    self.aplica_grav()
+    if (_jump && chao)
+        velv = (-max_velv)
+    parede_dir = place_meeting((x + 1), y, obj_chao)
+    parede_esq = place_meeting((x - 1), y, obj_chao)
+    if (parede_dir || parede_esq)
+        _tempo = timer
+    else if (_tempo > 0)
+        _tempo--
+    if (_tempo > 0 && _jump && (!chao))
+    {
+        velv = (-max_velv)
+        var _vel = (parede_esq - parede_dir) * 10
+        if ((!parede_dir) && (!parede_esq))
+            _vel = (_right - _left) * 20
+        velh = _vel
+    }
+    move_and_collide(velh, 0, obj_chao, 12)
+    move_and_collide(0, velv, obj_chao, 12)
+    show_debug_message(_tempo)
+}
+
+function anon@1711@gml_Object_obj_player_Create_0() //gml_Script_anon@1711@gml_Object_obj_player_Create_0
+{
+    chao = place_meeting(x, (y + 1), obj_chao)
+    if (!chao)
+        velv += grav
+    else
+        velv = 0
+    velv = clamp(velv, ((-max_velv) * 1.5), (max_velv * 1.5))
+}
