@@ -1,0 +1,25 @@
+
+//CREATE DO OBJ
+grav = 0.3
+velv = 0
+velh = 0
+max_velv = 9
+max_velh = 4
+
+
+//STEP DO OBJ
+chao = place_meeting(x, (y + 1), obj_colidor)
+var _dir = keyboard_check(ord("D"))
+var _esq = keyboard_check(ord("A"))
+var _jump = keyboard_check_pressed(ord("W"))
+velh = (_dir - _esq) * max_velh
+if (!chao)
+    velv += grav
+else
+{
+    velv = 0
+    if _jump
+        velv = (-max_velv)
+}
+move_and_collide(velh, 0, obj_colidor)
+move_and_collide(0, velv, obj_colidor, 12)
