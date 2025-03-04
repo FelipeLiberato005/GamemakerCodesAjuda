@@ -1,0 +1,28 @@
+ --CREATE--
+x_barra = 0
+tam_barra = 0
+hp = 100
+hp_max = 100
+hp_sec = 100
+
+--STEP--
+var _tam_sprite = bbox_right - bbox_left
+tam_barra = 2 * _tam_sprite
+x_barra = x + _tam_sprite / 2 - tam_barra / 2
+if (alarm[0] <= 0)
+    hp_sec = lerp(hp_sec, hp, 0.1)
+if (hp <= 0)
+    instance_destroy()
+
+
+--MOUSE_pressed--
+hp -= 3
+alarm[0] = 45
+
+
+
+--DRAW--
+draw_self()
+draw_rectangle_color(x_barra, (y - 12), (x_barra + tam_barra * (hp_sec / hp_max)), (y - 4), c_orange, c_orange, c_orange, c_orange, 0)
+draw_rectangle_color(x_barra, (y - 12), (x_barra + tam_barra * (hp / hp_max)), (y - 4), c_red, c_red, c_red, c_red, 0)
+draw_sprite_stretched(spr_barra, 0, x_barra, (y - 12), (tam_barra + 2), 10)
