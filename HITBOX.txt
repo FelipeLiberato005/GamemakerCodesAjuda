@@ -1,0 +1,59 @@
+Criar a hitbox a partir da sprite do player (o tamanho do ataque), use a sprite como referencia, de preferencia o frame em que vai fazer o ataque, não use o primeiro
+
+
+										CREAT(de quem vai tomar o dano)	
+VIDA = 10 //exemplo	
+                    
+                                                                                 STEP(de quem vai tomar o dano)	
+
+if(VIDA <= 0) instance_destroy //exemplo
+
+
+										CREAT(criar um obj para o hitbox e colocar a sprite do hitbox)
+
+
+colision_list = ds_list_create();//lista colisão
+hitbox_list = ds_list_create();//losta obj ja verificados
+var bati = instance_place_list(x, y, obj_target, colision_list, false)
+
+if(bati > 0)
+{
+	for(var i = 0;i < ds_list_size(colision_list); i++){
+	
+			var target = colision_list[| i];
+			if(!ds_list_find_value(hitbox_list,target)){
+			
+				ds_list_add(hitbox_list,target)
+				with(target){
+				
+					VIDA=5; (exemplo)	
+				}
+			}
+			
+	}
+
+
+
+
+
+
+
+
+
+										CLEAN UP(limpar as listas para não oculpar espaço na memoria)
+
+	
+}
+
+
+if(ds_exists(hitbox_list,ds_type_list))
+{
+		ds_list_destroy(hitbox_list)
+}
+
+
+if(ds_exists(colision_list,ds_type_list))
+{
+		ds_list_destroy(colision_list)
+}
+
